@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TextInput } from "react-native";
 import Checkbox from "../Checkbox";
 
-const ToDoItem = () => {
+interface ToDoItemProps {
+  todo: {
+    id: string;
+    content: string;
+    isCompleted: boolean;
+  };
+}
+
+const ToDoItem = ({ todo }: ToDoItemProps) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (!todo) {
+      return;
+    }
+    setIsChecked(todo.isCompleted);
+    setContent(todo.content);
+  }, [todo]);
 
   return (
     <View
@@ -14,6 +31,8 @@ const ToDoItem = () => {
         onPress={() => setIsChecked(!isChecked)}
       />
       <TextInput
+        value={content}
+        onChangeText={setContent}
         style={{
           flex: 1,
           fontSize: 18,
