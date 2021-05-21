@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, TextInput } from "react-native";
 import Checkbox from "../Checkbox";
 
@@ -8,11 +8,13 @@ interface ToDoItemProps {
     content: string;
     isCompleted: boolean;
   };
+  onSubmit: () => void;
 }
 
-const ToDoItem = ({ todo }: ToDoItemProps) => {
+const ToDoItem = ({ todo, onSubmit }: ToDoItemProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const [content, setContent] = useState("");
+  const input = useRef<TextInput>(null);
 
   useEffect(() => {
     if (!todo) {
@@ -21,6 +23,12 @@ const ToDoItem = ({ todo }: ToDoItemProps) => {
     setIsChecked(todo.isCompleted);
     setContent(todo.content);
   }, [todo]);
+
+  useEffect(() => {
+    if (input.current) {
+      input.current.focus();
+    }
+  }, [input]);
 
   return (
     <View
@@ -31,6 +39,7 @@ const ToDoItem = ({ todo }: ToDoItemProps) => {
         onPress={() => setIsChecked(!isChecked)}
       />
       <TextInput
+        ref={input}
         value={content}
         onChangeText={setContent}
         style={{
@@ -40,6 +49,8 @@ const ToDoItem = ({ todo }: ToDoItemProps) => {
           marginLeft: 12,
         }}
         multiline
+        onSubmitEditing={onSubmit}
+        blurOnSubmit
       />
     </View>
   );

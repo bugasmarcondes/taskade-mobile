@@ -23,12 +23,24 @@ export default function TabOneScreen() {
     },
   ]);
 
+  const createNewItem = (atIndex: number) => {
+    const newTodos = [...todos];
+    newTodos.splice(atIndex, 0, {
+      id: Math.random().toString(),
+      content: "",
+      isCompleted: false,
+    });
+    setTodos(newTodos);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
       <FlatList
         data={todos}
-        renderItem={({ item }) => <ToDoItem todo={item} />}
+        renderItem={({ item, index }) => (
+          <ToDoItem todo={item} onSubmit={() => createNewItem(index + 1)} />
+        )}
         style={{ width: "100%" }}
       />
     </View>
