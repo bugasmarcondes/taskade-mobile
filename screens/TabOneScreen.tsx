@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Text, View } from "../components/Themed";
 import ToDoItem from "../components/ToDoItem";
 
 export default function TabOneScreen() {
+  const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([
     {
       id: "1",
@@ -35,7 +36,12 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+      <TextInput
+        style={styles.title}
+        value={title}
+        onChangeText={setTitle}
+        placeholder="Title"
+      />
       <FlatList
         data={todos}
         renderItem={({ item, index }) => (
@@ -54,7 +60,10 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   title: {
+    width: "100%",
     fontSize: 20,
+    color: "white",
     fontWeight: "bold",
+    marginBottom: 12,
   },
 });
