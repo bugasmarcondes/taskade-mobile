@@ -6,7 +6,7 @@
 export type RootStackParamList = {
   Splash: undefined;
   Home: undefined;
-  ToDoScreen: undefined;
+  ToDoScreen: { id: string };
   SignIn: undefined;
   SignUp: undefined;
   NotFound: undefined;
