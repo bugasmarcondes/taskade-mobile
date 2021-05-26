@@ -3,7 +3,7 @@ import { FlatList, StyleSheet } from "react-native";
 import ProjectItem from "../components/ProjectItem";
 import { View } from "../components/Themed";
 
-export default function TabTwoScreen() {
+export default function ProjectsScreen() {
   const [projects, setProjects] = useState([
     {
       id: "1",

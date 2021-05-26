@@ -9,7 +9,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { Text, View } from "../components/Themed";
 import ToDoItem from "../components/ToDoItem";
 
-export default function TabOneScreen() {
+export default function ToDoScreen() {
   const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([
     {
