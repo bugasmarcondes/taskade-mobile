@@ -19,3 +19,11 @@ npm run start
 ```
 
 Set of [icons](http://icons.expo.fyi) that can be used with Expo
+
+**Apollo Client**
+
+Is a comprehensive state management library for JavaScript that enables you to manage both local and remote data with GraphQL. Use it to fetch, cache, and modify application data, all while automatically updating your UI.
+
+```bash
+yarn add @apollo/client graphql
+```
