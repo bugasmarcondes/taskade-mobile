@@ -1,13 +1,57 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import {
+  Alert,
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useMutation, gql } from "@apollo/client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const SIGN_UP_MUTATION = gql`
+  mutation signUp($email: String!, $password: String!, $name: String!) {
+    signUp(input: { email: $email, password: $password, name: $name }) {
+      token
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+`;
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
-  const onSubmit = () => {};
+
+  // mutation[0], function that triggers the mutation
+  // mutation[1], result object with { data, error, loading }
+  const [signUp, { data, error, loading }] = useMutation(SIGN_UP_MUTATION);
+
+  if (error) {
+    Alert.alert("Error signing up. Try again");
+  }
+  if (data) {
+    AsyncStorage.setItem("token", data.signUp.token).then(() => {
+      navigation.navigate("Home");
+    });
+  }
+
+  const onSubmit = () => {
+    signUp({
+      variables: {
+        name,
+        email,
+        password,
+      },
+    });
+  };
 
   return (
     <View style={{ padding: 20 }}>
@@ -52,15 +96,18 @@ const SignUpScreen = () => {
           height: 50,
           borderRadius: 5,
           alignItems: "center",
+          flexDirection: "row",
           justifyContent: "center",
           marginTop: 30,
         }}
       >
+        {loading && <ActivityIndicator />}
         <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
           Sign Up
         </Text>
       </Pressable>
       <Pressable
+        disabled={loading}
         onPress={() => navigation.navigate("SignIn")}
         style={{
           height: 50,

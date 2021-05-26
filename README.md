@@ -26,4 +26,5 @@ Is a comprehensive state management library for JavaScript that enables you to m
 
 ```bash
 yarn add @apollo/client graphql
+yarn add @react-native-async-storage/async-storage
 ```
