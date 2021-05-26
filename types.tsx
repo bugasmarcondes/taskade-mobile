@@ -6,6 +6,8 @@
 export type RootStackParamList = {
   Home: undefined;
   ToDoScreen: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
   NotFound: undefined;
 };
 
